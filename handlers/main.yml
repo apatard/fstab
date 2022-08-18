@@ -3,7 +3,9 @@
     path: "{{ item.target }}"
     state: directory
   loop: "{{ fstab_additional_mounts }}"
-  when: fstab_create_additional_dirs
+  when:
+  - fstab_create_additional_dirs
+  - "item.target != 'none'"
   listen: fstab_update
 
 - name: Mount all fstab entries using `mount -a`
